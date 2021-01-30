@@ -60,16 +60,37 @@ class Game():
 
 
 class rocket():
+    
+    def __init__(self):
 
-	def __init__(self):
+        self.x = 20
+        self.y = 225
+        self.w = 50
+        self.h = 50
+        self.up = False
+        self.down = False
 
-		self.x = 20
-		self.y = 225
+    def draw(self,screen):
+        counter = 0
+        if (counter % 2 == 0):
+            pygame.draw.rect(screen,(0,0,255),(self.x,self.y,self.w,self.h))
+            counter+=1
+        else:
+            pygame.draw.rect(screen,(255,0,0),(self.x,self.y,self.w,self.h))
+            counter+=1
+        pygame.display.update()
+        return
 
-	def draw(self):
-		
-		pygame.draw.rect(screen,(0,0,255), (self.x,self.y,50,50))
 
+    def update(self):
+        
+        if(self.up):
+            self.y -= 4
+            self.up = False
+        if(self.down):
+            self.y += 4
+            self.down = False
+        return
 class asteroid():
 
 	def __init__(self):
