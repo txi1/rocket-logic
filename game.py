@@ -25,19 +25,16 @@ class Game():
             if event.type == pygame.QUIT:
                 self.running, self.playing = False, False
                 self.curr_menu.run_display = False
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RETURN:
-                    self.START = True
-                if event.key == pygame.K_BACKSPACE:
-                    self.BACK = True
-                if event.key == pygame.K_UP:
-                    self.UP = True
-                if event.key == pygame.K_DOWN:
-                    self.DOWN = True
-                if event.key == pygame.K_RIGHT:
-                    self.RIGHT = True
-                if event.key == pygame.K_LEFT:
-                    self.LEFT = True                    
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_RETURN]:
+            self.START = True
+        if keys[pygame.K_BACKSPACE]:
+            self.BACK = True
+        if keys[pygame.K_UP]:
+            self.UP = True
+        if keys[pygame.K_DOWN]:
+            self.DOWN = True            
+
 
     def reset_keys(self):
         self.UP, self.DOWN, self.LEFT, self.RIGHT, self.START, self.BACK = False, False, False, False, False, False
@@ -82,13 +79,13 @@ class rocket():
 
     def update(self):
         if(self.game.UP):
-            self.y -= 4
+            self.y -= 2
         if(self.game.DOWN):
-            self.y += 4
+            self.y += 2
         if(self.game.RIGHT):
-            self.x += 4     
+            self.x += 2     
         if(self.game.LEFT):
-            self.x -= 4               
+            self.x -= 2               
 class asteroid():
 
 	def __init__(self):
