@@ -86,6 +86,8 @@ class asteroid():
 
 	def update(self):
 		self.x -= 3
+		if (self.x == -1000):
+			self.x = 800
 
 
 
