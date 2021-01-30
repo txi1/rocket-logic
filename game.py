@@ -54,7 +54,7 @@ class Game():
     def game_loop(self):
         
         while self.playing:
-            
+
             #evebt
             self.check_events()
         
