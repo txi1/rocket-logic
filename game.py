@@ -91,9 +91,9 @@ class rocket():
 
     def update(self):
         if(self.game.UP):
-            self.y -= 1
+            self.y -= 5
         if(self.game.DOWN):
-            self.y += -1
+            self.y += 5
               
 class asteroid():
 
