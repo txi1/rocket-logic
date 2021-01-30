@@ -34,14 +34,20 @@ def replace_parts(to_change,changes,true_expressions,false_expressions,contingen
             a = random.choice(location_of_letters)
             original_length = len(to_change)
             if to_change[a] == 'T':
-                to_change = to_change[0:a] + '('+random.choice(true_expressions)+')' + to_change[a+1:]
+                if random.randint(1,2) == 2:
+                    to_change = to_change[0:a] + '('+random.choice(true_expressions)+')' + to_change[a+1:]
+                else:
+                    to_change = to_change[0:a] + '¬('+random.choice(false_expressions)+')' + to_change[a+1:]
                 difference = len(to_change)-original_length
                 for item in location_of_letters:
                     if item > a:
                         item+=difference
                 location_of_letters.pop(location_of_letters.index(a))
             elif to_change[a] == 'F':
-                to_change = to_change[0:a] + '('+random.choice(false_expressions)+')' + to_change[a+1:]
+                if random.randint(1,2) == 2:
+                    to_change = to_change[0:a] + '('+random.choice(false_expressions)+')' + to_change[a+1:]
+                else:
+                    to_change = to_change[0:a] + '¬('+random.choice(true_expressions)+')' + to_change[a+1:]
                 difference = len(to_change)-original_length
                 for item in location_of_letters:
                     if item > a:
