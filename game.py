@@ -1,16 +1,18 @@
+  
 import os
 import random
 import pygame
 import sys
-import equations
 from menu import MainMenu
 from time import sleep
 
 class Game():
     def __init__(self):
+		
         pygame.init()
         self.running = True
         self.playing = False
+        self.paused = False
         self.UP, self.DOWN, self.LEFT, self.RIGHT, self.START, self.BACK = False, False, False, False, False, False
         self.player = rocket(self)
         self.rock = asteroid(self)
@@ -21,36 +23,41 @@ class Game():
         pygame.display.set_caption("Rocket Logic: Not quite rocket science")
         self.curr_menu = MainMenu(self)
 
-        equation, result = equations.generate_equation(1)
-        self.text = pygame.font.Font('freesansbold.ttf',32).render(equation,True,(0,0,0))
-        self.textrect = self.text.get_rect()
-
 
     def check_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running, self.playing = False, False
                 self.curr_menu.run_display = False
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_RETURN]:
-            self.START = True
-        if keys[pygame.K_BACKSPACE]:
-            self.BACK = True
-        if keys[pygame.K_UP]:
-            self.UP = True
-        if keys[pygame.K_DOWN]:
-            self.DOWN = True            
+            if event.type == pygame.KEYDOWN:
+                if(self.playing == False):
+                    if event.key == pygame.K_UP:
+                        self.UP = True
+                    if event.key == pygame.K_DOWN:
+                        self.DOWN = True
+                if event.key == pygame.K_RETURN:
+                    self.START = True
+                if event.key == pygame.K_BACKSPACE:
+                    self.BACK = True
+
+        if(self.playing):
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_UP]:
+                self.UP = True
+            if keys[pygame.K_DOWN]:
+                self.DOWN = True            
 
 
     def reset_keys(self):
         self.UP, self.DOWN, self.LEFT, self.RIGHT, self.START, self.BACK = False, False, False, False, False, False
 
     def game_loop(self):
-        while self.playing:
-            #evebt 
-            self.screen.blit(self.text,self.textrect)
+        while (self.playing and (self.paused == False)):
+            #evebt
             self.check_events()
             if self.START:
+                    self.paused = True
+            if self.BACK:
                 self.playing = False
             self.display.fill((0,0,0))
             self.player.draw()
@@ -62,6 +69,16 @@ class Game():
             pygame.display.update()
             self.reset_keys()
             pygame.time.delay(10)
+        while self.paused == True:
+            self.check_events()
+            if self.START:
+                self.paused = False
+            if self.BACK:
+                self.playing = False
+                self.paused = False
+            self.draw_text('PAUSED', 240, self.windowX/2, self.windowY/2)
+            self.screen.blit(self.display, (0,0))
+            pygame.display.update()          	
 
     def draw_text(self, text, size, x, y):
         font = pygame.font.Font(self.font_name, size)
@@ -113,3 +130,4 @@ start_game = Game()
 while start_game.running:
     start_game.curr_menu.display_menu()
     start_game.game_loop()
+

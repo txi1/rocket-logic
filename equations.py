@@ -23,7 +23,7 @@ def complicate_equation(current_equation, complexity, true_expressions, false_ex
         return current_equation
     else:
         equation_as_list = current_equation.split()
-        new_equation = replace_parts(current_equation,2,true_expressions,false_expressions,contingent_expressions)
+        new_equation = replace_parts(current_equation,complexity,true_expressions,false_expressions,contingent_expressions)
 
         return complicate_equation(new_equation,complexity-1,true_expressions,false_expressions,contingent_expressions)
 
