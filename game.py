@@ -4,97 +4,70 @@ import pygame
 import sys
 from time import sleep
 
-
-pygame.init
-windowX = 800
-windowY = 500
-speed = 0.5
-
-
-screen = pygame.display.set_mode([windowX,windowY])
-
-def main():
-	running = True
-	player = rocket()
-	rock = asteroid()
-	while running:
-		screen.fill((255,255,255))	
-		
-		for event in pygame.event.get():
-			if event.type == pygame.QUIT:
-				running = False
-
-			keys = pygame.key.get_pressed()
-			if(keys[pygame.K_UP]):
-				player.moveUp = True
-			if(keys[pygame.K_DOWN]):
-				player.moveDown = True
-			if(keys[pygame.K_SPACE]):
-				rock.stopMoving = True
-
-			if(keys[pygame.K_UP]==False):
-				player.moveUp = False
-			if(keys[pygame.K_DOWN]==False):
-				player.moveDown = False
-			if(keys[pygame.K_SPACE]==False):
-				rock.stopMoving = False
+class Game():
+    def __init__(self):
+        pygame.init()
+        self.running = True
+        self.playing = False
+        self.UP, self.DOWN, self.START, self.BACK = False, False, False, False
+        #self.player = rocket()
+        self.windowX, self.windowY = 800, 500
+        self.display = pygame.Surface((self.windowX, self.windowY))
+        self.screen = pygame.display.set_mode([self.windowX, self.windowY])
+        pygame.display.set_caption("Rocket Logic: Not quite rocket science")
 
 
-		if(player.x + player.w > rock.x and player.x < rock.x + rock.w and player.y + player.h > rock. y and player.y < rock.y + rock.h):
-			print("collision occured!")
+    def check_events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.running, self.playing = False, False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    self.START = True
+                if event.key == pygame.K_BACKSPACE:
+                    self.BACK = True
+                if event.key == pygame.K_UP:
+                    self.UP = True
+                if event.key == pygame.K_DOWN:
+                    self.DOWN = True
 
-		player.update()
-		player.draw()
-		rock.update()
-		rock.draw()
-		
+    def reset_keys(self):
+        self.UP, self.DOWN, self.START, self.BACK = False, False, False, False
 
-		pygame.time.delay(8)
+    def game_loop(self):
+        while self.playing:
+            self.check_events()
+            if self.START:
+                self.playing = False
+            self.screen.fill((255,255,255))		
+            #self.player.draw()
+            self.screen.blit(self.display, (0,0))
+            pygame.display.update()
+            self.reset_keys()
 
-		pygame.display.update()
-		
-		
+
+
 class rocket():
 
 	def __init__(self):
 
 		self.x = 20
 		self.y = 225
-		self.w = 50
-		self.h = 50
-		self.moveUp = False
-		self.moveDown = False
 
 	def draw(self):
 		
-		pygame.draw.rect(screen,(0,0,255), (self.x,self.y,self.w,self.h))
-
-	def update(self):
-		if self.moveUp:
-			self.y -= 4
-		if self.moveDown:
-			self.y += 4
+		pygame.draw.rect(screen,(0,0,255), (self.x,self.y,50,50))
 
 class asteroid():
 
 	def __init__(self):
 		
-		self.x = windowX
-		self.y = 200
-		self.w = 800
-		self.h = 100
-		self.stopMoving = False
-
-	def draw(self):
-		
-		pygame.draw.rect(screen,(0,255,255),(self.x,self.y,self.w,self.h))
-
-	def update(self):
-		if self.stopMoving == False:
-			self.x -= speed
+		self.x = 800
 
 
 
+start_game = Game()
 
-
-main()
+while start_game.running:
+    start_game.playing = True
+    start_game.game_loop()
