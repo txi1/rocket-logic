@@ -14,6 +14,7 @@ class Game():
         self.windowX, self.windowY = 800, 500
         self.display = pygame.Surface((self.windowX, self.windowY))
         self.screen = pygame.display.set_mode([self.windowX, self.windowY])
+        pygame.display.set_caption("Rocket Logic: Not quite rocket science")
 
 
     def check_events(self):
