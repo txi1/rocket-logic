@@ -12,6 +12,7 @@ class Game():
         self.playing = False
         self.UP, self.DOWN, self.LEFT, self.RIGHT, self.START, self.BACK = False, False, False, False, False, False
         self.player = rocket(self)
+        self.rock = asteroid(self)
         self.windowX, self.windowY = 1200, 700
         self.display = pygame.Surface((self.windowX, self.windowY))
         self.screen = pygame.display.set_mode([self.windowX, self.windowY])
@@ -48,10 +49,13 @@ class Game():
             self.display.fill((0,0,0))
             self.player.draw()
             self.player.update()
+            self.rock.draw()
+            self.rock.update()
             #self.draw_text('Thanks for Playing', 120, self.windowX/2, self.windowY/2)		
             self.screen.blit(self.display, (0,0))
             pygame.display.update()
             self.reset_keys()
+            pygame.time.delay(10)
 
     def draw_text(self, text, size, x, y):
         font = pygame.font.Font(self.font_name, size)
@@ -79,20 +83,24 @@ class rocket():
 
     def update(self):
         if(self.game.UP):
-            self.y -= 2
+            self.y -= 5
         if(self.game.DOWN):
-            self.y += 2
-        if(self.game.RIGHT):
-            self.x += 2     
-        if(self.game.LEFT):
-            self.x -= 2               
+            self.y += 5
+              
 class asteroid():
 
-	def __init__(self):
-		
+	def __init__(self, game):
+		self.game = game
 		self.x = 800
+		self.y = 200
+		self.h = 100
+		self.w = 800
 
+	def draw(self):
+		pygame.draw.rect(self.game.display,(0,255,255),(self.x,self.y,self.w,self.h))
 
+	def update(self):
+		self.x -= 3
 
 start_game = Game()
 
