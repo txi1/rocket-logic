@@ -7,6 +7,7 @@ from time import sleep
 
 class Game():
     def __init__(self):
+		
         pygame.init()
         self.running = True
         self.playing = False
