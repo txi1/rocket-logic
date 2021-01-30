@@ -2,34 +2,45 @@ import os
 import random
 import pygame
 import sys
+from menu import MainMenu
 from time import sleep
 
 class Game():
+<<<<<<< HEAD
     
+=======
+>>>>>>> 3da43c070bd562432c596f038bdb4b4caa72e342
     def __init__(self):
 		
         pygame.init()
-
         self.running = True
         self.playing = False
-        self.UP, self.DOWN, self.START, self.BACK = False, False, False, False
-        
-        self.player = rocket()
-        
-        self.windowX, self.windowY = 800,500
-
+        self.UP, self.DOWN, self.LEFT, self.RIGHT, self.START, self.BACK = False, False, False, False, False, False
+        self.player = rocket(self)
+        self.windowX, self.windowY = 1200, 700
         self.display = pygame.Surface((self.windowX, self.windowY))
         self.screen = pygame.display.set_mode([self.windowX, self.windowY])
-        self.font_name = 'Minecrafter.ttf'
-
+        self.font_name = 'fonts/game_over.ttf'
         pygame.display.set_caption("Rocket Logic: Not quite rocket science")
+        self.curr_menu = MainMenu(self)
+
 
     def check_events(self):
-
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running, self.playing = False, False
+                self.curr_menu.run_display = False
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_RETURN]:
+            self.START = True
+        if keys[pygame.K_BACKSPACE]:
+            self.BACK = True
+        if keys[pygame.K_UP]:
+            self.UP = True
+        if keys[pygame.K_DOWN]:
+            self.DOWN = True            
 
+<<<<<<< HEAD
             keys = pygame.key.get_pressed()
             if(keys[pygame.K_RETURN]):
                 self.START = True
@@ -48,41 +59,43 @@ class Game():
                 self.player.down = False"""
 
             
+=======
+>>>>>>> 3da43c070bd562432c596f038bdb4b4caa72e342
 
     def reset_keys(self):
-        self.UP, self.DOWN, self.START, self.BACK = False, False, False, False
+        self.UP, self.DOWN, self.LEFT, self.RIGHT, self.START, self.BACK = False, False, False, False, False, False
 
     def game_loop(self):
-        
         while self.playing:
+<<<<<<< HEAD
             
+=======
+>>>>>>> 3da43c070bd562432c596f038bdb4b4caa72e342
             #evebt
             self.check_events()
-        
             if self.START:
                 self.playing = False
-            
-            #update
+            self.display.fill((0,0,0))
+            self.player.draw()
             self.player.update()
-
-            #render
-            self.player.draw(self.screen)
-            #self.screen.blit(self.display, (0,0))
-
-            
-            #self.reset_keys()
+            #self.draw_text('Thanks for Playing', 120, self.windowX/2, self.windowY/2)		
+            self.screen.blit(self.display, (0,0))
+            pygame.display.update()
+            self.reset_keys()
 
     def draw_text(self, text, size, x, y):
-        font = pygame.font.Font(self.font,size)
-        text_surface = font.render(text,True,(0,0,0))
+        font = pygame.font.Font(self.font_name, size)
+        text_surface = font.render(text, True, (255,255,255))
         text_rect = text_surface.get_rect()
-        text.rect.center = (x,y)
+        text_rect.center = (x,y)
         self.display.blit(text_surface, text_rect)
+
+
 
 class rocket():
     
-    def __init__(self):
-
+    def __init__(self, game):
+        self.game = game
         self.x = 20
         self.y = 225
         self.w = 50
@@ -90,19 +103,12 @@ class rocket():
         self.up = False
         self.down = False
 
-    def draw(self,screen):
-        counter = 0
-        if (counter % 2 == 0):
-            pygame.draw.rect(screen,(0,0,255),(self.x,self.y,self.w,self.h))
-            counter+=1
-        else:
-            pygame.draw.rect(screen,(255,0,0),(self.x,self.y,self.w,self.h))
-            counter+=1
-        pygame.display.update()
-        return
+    def draw(self):
+        pygame.draw.rect(self.game.display,(0,0,255),(self.x,self.y,self.w,self.h))
 
 
     def update(self):
+<<<<<<< HEAD
         
         if(self.up):
             self.y -= 4
@@ -113,21 +119,26 @@ class rocket():
         return
 
     
+=======
+        if(self.game.UP):
+            self.y -= 2
+        if(self.game.DOWN):
+            self.y += 2
+        if(self.game.RIGHT):
+            self.x += 2     
+        if(self.game.LEFT):
+            self.x -= 2               
+>>>>>>> 3da43c070bd562432c596f038bdb4b4caa72e342
 class asteroid():
 
-    def __init__(self):
-        self.x = 800
-        self.y = 200
-        self.h = 100
-        self.w = 800
+	def __init__(self):
+		
+		self.x = 800
 
-    def draw(self,screen):
-        
-        pygame.draw.rect(screen,(0,0,255),(self.x,self.y,self.w,self.h))
+
 
 start_game = Game()
+
 while start_game.running:
-    start_game.playing = True
+    start_game.curr_menu.display_menu()
     start_game.game_loop()
-
-
