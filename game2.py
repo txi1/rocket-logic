@@ -63,7 +63,7 @@ def update_rocket(entity):
     entity['current_action'] = "NA"
 
 def render(game_data):
-    game_data["screen"].fill([245, 245, 220])
+    game_data["screen"].fill([0, 0, 0])
 
 
     for entity in game_data["entities"]:
