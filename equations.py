@@ -24,9 +24,9 @@ def complicate_equation(current_equation, complexity, true_expressions, false_ex
     else:
         equation_as_list = current_equation.split()
         new_equation = ''
-        seed = random.randint(1,2)
+        seed = True
         for item in equation_as_list:
-            if seed == 2:
+            if seed:
                 if 'F' in item:
                     item = item.replace('F', f'({random.choice(false_expressions)})')
                 elif 'T' in item:
@@ -34,11 +34,14 @@ def complicate_equation(current_equation, complexity, true_expressions, false_ex
                 elif 'p' in item:
                     item = item.replace('p', f'({random.choice(contingent_expressions)})')
             new_equation = new_equation + item + ' '
-            if seed == 2:
-                seed = 1
+            if seed:
+                seed = False
             else:
-                seed+=1
+                seed = True
         return complicate_equation(new_equation,complexity-1,true_expressions,false_expressions,contingent_expressions)
+
+# def replace_parts(true_expressions,false_expressions,contingent_expressions):
+#     pass
 
 a = generate_equation(2)
 print(a)
