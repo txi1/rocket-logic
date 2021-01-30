@@ -4,6 +4,10 @@ import pygame
 import sys
 from time import sleep
 
+windowX, windowY = 800,500
+display = pygame.Surface((windowX, windowY))
+screen = pygame.display.set_mode([windowX, windowY])
+
 class Game():
 	
 	def __init__(self):
@@ -14,10 +18,9 @@ class Game():
 		self.UP, self.DOWN, self.START, self.BACK = False, False, False, False
 
 		self.player = rocket()
+		
 		self.windowX, self.windowY = 800,500
-
-		self.display = pygame.Surface((self.windowX, self.windowY))
-		self.screen = pygame.display.set_mode([self.windowX, self.windowY])
+		
 		self.font_name = 'Minecrafter.ttf'
 
 		pygame.display.set_caption("Rocket Logic: Not quite rocket science")
@@ -41,7 +44,7 @@ class Game():
 				self.DOWN = True
 			
 			if(keys[pygame.K_UP]==False):
-				print(False)
+				#print(False)
 				self.player.up = False
 			if(keys[pygame.K_DOWN]==False):
 				self.player.down = False
@@ -60,9 +63,9 @@ class Game():
 			if self.START:
 				self.playing = False
 
-			self.player.draw(self.display)
+			self.player.draw(screen)
 			self.player.update()
-			self.screen.blit(self.display, (0,0))
+			screen.blit(display, (0,0))
 
 			pygame.display.update()
 			#self.reset_keys()
@@ -85,9 +88,9 @@ class rocket():
 		self.up = False
 		self.down = False
 
-	def draw(self,screen):
+	def draw(self,surface):
 	
-		pygame.draw.rect(screen,(0,0,255),(self.x,self.y,self.w,self.h))
+		pygame.draw.rect(surface,(0,0,255),(self.x,self.y,self.w,self.h))
 
 	def update(self):
 		
