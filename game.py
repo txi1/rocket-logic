@@ -10,8 +10,8 @@ class Game():
         pygame.init()
         self.running = True
         self.playing = False
-        self.UP, self.DOWN, self.START, self.BACK = False, False, False, False
-        #self.player = rocket()
+        self.UP, self.DOWN, self.LEFT, self.RIGHT, self.START, self.BACK = False, False, False, False, False, False
+        self.player = rocket(self)
         self.windowX, self.windowY = 1200, 700
         self.display = pygame.Surface((self.windowX, self.windowY))
         self.screen = pygame.display.set_mode([self.windowX, self.windowY])
@@ -34,18 +34,24 @@ class Game():
                     self.UP = True
                 if event.key == pygame.K_DOWN:
                     self.DOWN = True
+                if event.key == pygame.K_RIGHT:
+                    self.RIGHT = True
+                if event.key == pygame.K_LEFT:
+                    self.LEFT = True                    
 
     def reset_keys(self):
-        self.UP, self.DOWN, self.START, self.BACK = False, False, False, False
+        self.UP, self.DOWN, self.LEFT, self.RIGHT, self.START, self.BACK = False, False, False, False, False, False
 
     def game_loop(self):
         while self.playing:
+            #evebt
             self.check_events()
             if self.START:
                 self.playing = False
             self.display.fill((0,0,0))
-            self.draw_text('Thanks for Playing', 120, self.windowX/2, self.windowY/2)		
-            #self.player.draw()
+            self.player.draw()
+            self.player.update()
+            #self.draw_text('Thanks for Playing', 120, self.windowX/2, self.windowY/2)		
             self.screen.blit(self.display, (0,0))
             pygame.display.update()
             self.reset_keys()
@@ -61,8 +67,8 @@ class Game():
 
 class rocket():
     
-    def __init__(self):
-
+    def __init__(self, game):
+        self.game = game
         self.x = 20
         self.y = 225
         self.w = 50
@@ -70,27 +76,19 @@ class rocket():
         self.up = False
         self.down = False
 
-    def draw(self,screen):
-        counter = 0
-        if (counter % 2 == 0):
-            pygame.draw.rect(screen,(0,0,255),(self.x,self.y,self.w,self.h))
-            counter+=1
-        else:
-            pygame.draw.rect(screen,(255,0,0),(self.x,self.y,self.w,self.h))
-            counter+=1
-        pygame.display.update()
-        return
+    def draw(self):
+        pygame.draw.rect(self.game.display,(0,0,255),(self.x,self.y,self.w,self.h))
 
 
     def update(self):
-        
-        if(self.up):
+        if(self.game.UP):
             self.y -= 4
-            self.up = False
-        if(self.down):
+        if(self.game.DOWN):
             self.y += 4
-            self.down = False
-        return
+        if(self.game.RIGHT):
+            self.x += 4     
+        if(self.game.LEFT):
+            self.x -= 4               
 class asteroid():
 
 	def __init__(self):

@@ -17,7 +17,7 @@ def initialize_data(screen):
     entities.append({
         "type": "rocket",
         "location" : [20, 225],
-        "velocity": 4,
+        "velocity": 1,
         "size": [50, 50],
         "color":(0, 0, 225),
         "current_action":'NA'
@@ -42,6 +42,10 @@ def handle_input(game_data):
                 for entity in game_data["entities"]:
                     if entity['type'] == "rocket":
                         entity["current_action"] = 'Up'
+            if event.key == pygame.K_DOWN:
+                for entity in game_data["entities"]:
+                    if entity['type'] == "rocket":
+                        entity["current_action"] = 'Down'
 
 def update(game_data):
     
@@ -54,6 +58,8 @@ def update_rocket(entity):
             return
     elif entity["current_action"] == "Up":
         entity["location"][1] = entity["location"][1] - entity["velocity"]
+    elif entity["current_action"] == "Down":
+        entity["location"][1] = entity["location"][1] + entity["velocity"]
     entity['current_action'] = "NA"
 
 def render(game_data):
