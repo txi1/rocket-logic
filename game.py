@@ -14,6 +14,7 @@ class Game():
         self.windowX, self.windowY = 800, 500
         self.display = pygame.Surface((self.windowX, self.windowY))
         self.screen = pygame.display.set_mode([self.windowX, self.windowY])
+        self.font_name = 'Minecrafter.ttf'
         pygame.display.set_caption("Rocket Logic: Not quite rocket science")
 
 
@@ -39,11 +40,19 @@ class Game():
             self.check_events()
             if self.START:
                 self.playing = False
-            self.screen.fill((255,255,255))		
+            self.screen.fill((0,0,0))
+            self.draw_text('Thanks for Playing', 37, self.windowX/2, self.windowY/2)		
             #self.player.draw()
             self.screen.blit(self.display, (0,0))
             pygame.display.update()
             self.reset_keys()
+
+    def draw_text(self, text, size, x, y):
+        font = pygame.font.Font(self.font_name, size)
+        text_surface = font.render(text, True, (255,255,255))
+        text_rect = text_surface.get_rect()
+        text_rect.center = (x,y)
+        self.display.blit(text_surface, text_rect)
 
 
 
