@@ -2,6 +2,7 @@ import os
 import random
 import pygame
 import sys
+from menu import MainMenu
 from time import sleep
 
 class Game():
@@ -11,17 +12,19 @@ class Game():
         self.playing = False
         self.UP, self.DOWN, self.START, self.BACK = False, False, False, False
         #self.player = rocket()
-        self.windowX, self.windowY = 800, 500
+        self.windowX, self.windowY = 1200, 700
         self.display = pygame.Surface((self.windowX, self.windowY))
         self.screen = pygame.display.set_mode([self.windowX, self.windowY])
-        self.font_name = 'Minecrafter.ttf'
+        self.font_name = 'fonts/game_over.ttf'
         pygame.display.set_caption("Rocket Logic: Not quite rocket science")
+        self.curr_menu = MainMenu(self)
 
 
     def check_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running, self.playing = False, False
+                self.curr_menu.run_display = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
                     self.START = True
@@ -40,8 +43,8 @@ class Game():
             self.check_events()
             if self.START:
                 self.playing = False
-            self.screen.fill((0,0,0))
-            self.draw_text('Thanks for Playing', 37, self.windowX/2, self.windowY/2)		
+            self.display.fill((0,0,0))
+            self.draw_text('Thanks for Playing', 120, self.windowX/2, self.windowY/2)		
             #self.player.draw()
             self.screen.blit(self.display, (0,0))
             pygame.display.update()
@@ -78,5 +81,5 @@ class asteroid():
 start_game = Game()
 
 while start_game.running:
-    start_game.playing = True
+    start_game.curr_menu.display_menu()
     start_game.game_loop()
