@@ -71,7 +71,7 @@ class rocket():
     def __init__(self, game):
         self.game = game
         self.x = 20
-        self.y = 225
+        self.y = 325
         self.w = 50
         self.h = 50
         self.up = False
@@ -91,10 +91,10 @@ class asteroid():
 
 	def __init__(self, game):
 		self.game = game
-		self.x = 800
-		self.y = 200
+		self.x = 1200
+		self.y = 300
 		self.h = 100
-		self.w = 800
+		self.w = 1200
 
 	def draw(self):
 		pygame.draw.rect(self.game.display,(0,255,255),(self.x,self.y,self.w,self.h))
