@@ -28,6 +28,7 @@ class Game():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running, self.playing = False, False
+                self.paused = False
                 self.curr_menu.run_display = False
             if event.type == pygame.KEYDOWN:
                 if(self.playing == False):
