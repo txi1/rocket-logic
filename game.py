@@ -6,10 +6,6 @@ from menu import MainMenu
 from time import sleep
 
 class Game():
-<<<<<<< HEAD
-    
-=======
->>>>>>> 3da43c070bd562432c596f038bdb4b4caa72e342
     def __init__(self):
 		
         pygame.init()
@@ -40,37 +36,12 @@ class Game():
         if keys[pygame.K_DOWN]:
             self.DOWN = True            
 
-<<<<<<< HEAD
-            keys = pygame.key.get_pressed()
-            if(keys[pygame.K_RETURN]):
-                self.START = True
-            if(keys[pygame.K_BACKSPACE]):
-                self.BACK = True
-            if(keys[pygame.K_UP]):
-                self.player.up = True
-                #self.UP = True
-            if(keys[pygame.K_DOWN]):
-                self.player. = True
-            
-            """if(keys[pygame.K_UP]==False):
-                print(False)
-                self.player.up = False
-            if(keys[pygame.K_DOWN]==False):
-                self.player.down = False"""
-
-            
-=======
->>>>>>> 3da43c070bd562432c596f038bdb4b4caa72e342
 
     def reset_keys(self):
         self.UP, self.DOWN, self.LEFT, self.RIGHT, self.START, self.BACK = False, False, False, False, False, False
 
     def game_loop(self):
         while self.playing:
-<<<<<<< HEAD
-            
-=======
->>>>>>> 3da43c070bd562432c596f038bdb4b4caa72e342
             #evebt
             self.check_events()
             if self.START:
@@ -108,18 +79,6 @@ class rocket():
 
 
     def update(self):
-<<<<<<< HEAD
-        
-        if(self.up):
-            self.y -= 4
-            self.up = False
-        if(self.down):
-            self.y += 4
-            self.down = False
-        return
-
-    
-=======
         if(self.game.UP):
             self.y -= 2
         if(self.game.DOWN):
@@ -128,7 +87,6 @@ class rocket():
             self.x += 2     
         if(self.game.LEFT):
             self.x -= 2               
->>>>>>> 3da43c070bd562432c596f038bdb4b4caa72e342
 class asteroid():
 
 	def __init__(self):
