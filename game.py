@@ -2,6 +2,7 @@ import os
 import random
 import pygame
 import sys
+import equations
 from menu import MainMenu
 from time import sleep
 
@@ -20,29 +21,25 @@ class Game():
         pygame.display.set_caption("Rocket Logic: Not quite rocket science")
         self.curr_menu = MainMenu(self)
 
+        equation, result = equations.generate_equation(1)
+        self.text = pygame.font.Font('freesansbold.ttf',32).render(equation,True,(0,0,0))
+        self.textrect = self.text.get_rect()
+
 
     def check_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running, self.playing = False, False
                 self.curr_menu.run_display = False
-            if event.type == pygame.KEYDOWN:
-                if(self.playing == False):
-                    if event.key == pygame.K_BACKSPACE:
-                        self.BACK = True
-                    if event.key == pygame.K_UP:
-                        self.UP = True
-                    if event.key == pygame.K_DOWN:
-                        self.DOWN = True
-                if event.key == pygame.K_RETURN:
-                    self.START = True
-
-        if(self.playing):
-            keys = pygame.key.get_pressed()
-            if keys[pygame.K_UP]:
-                self.UP = True
-            if keys[pygame.K_DOWN]:
-                self.DOWN = True            
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_RETURN]:
+            self.START = True
+        if keys[pygame.K_BACKSPACE]:
+            self.BACK = True
+        if keys[pygame.K_UP]:
+            self.UP = True
+        if keys[pygame.K_DOWN]:
+            self.DOWN = True            
 
 
     def reset_keys(self):
@@ -50,7 +47,8 @@ class Game():
 
     def game_loop(self):
         while self.playing:
-            #evebt
+            #evebt 
+            self.screen.blit(self.text,self.textrect)
             self.check_events()
             if self.START:
                 self.playing = False
