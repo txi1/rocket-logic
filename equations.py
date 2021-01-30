@@ -2,9 +2,9 @@ import random
 
 def generate_equation(complexity):
 
-    possible_true_bases = ['p ∨ T','p ∨ ¬p', 'T', '¬F', 'p → p', 'T ∨ F', 'p ∨ (p ∨ T)']
-    possible_false_bases = ['p ∧ F', 'p ∧ ¬p', 'F', '¬T', '¬p ↔ p', 'T ∧ F', 'p ∧ (p ∧ F)']
-    possible_contingent_bases = ['p', '¬p', 'p ∧ (p ∨ T)', 'p ∧ (p ∨ F)', 'p ∨ (p ∧ T)', 'p ∨ (p ∧ F)']
+    possible_true_bases = ['p ∨ T','p ∨ ¬p', 'p → p', 'T ∨ F', 'p ∨ (p ∨ T)']
+    possible_false_bases = ['p ∧ F', 'p ∧ ¬p', '¬p ↔ p', 'T ∧ F', 'p ∧ (p ∧ F)']
+    possible_contingent_bases = ['p ∧ (p ∨ T)', 'p ∧ (p ∨ F)', 'p ∨ (p ∧ T)', 'p ∨ (p ∧ F)']
 
     random_number = random.randint(1,3)
     if random_number == 1:
@@ -23,25 +23,47 @@ def complicate_equation(current_equation, complexity, true_expressions, false_ex
         return current_equation
     else:
         equation_as_list = current_equation.split()
-        new_equation = ''
-        seed = True
-        for item in equation_as_list:
-            if seed:
-                if 'F' in item:
-                    item = item.replace('F', f'({random.choice(false_expressions)})')
-                elif 'T' in item:
-                    item = item.replace('T', f'({random.choice(true_expressions)})')
-                elif 'p' in item:
-                    item = item.replace('p', f'({random.choice(contingent_expressions)})')
-            new_equation = new_equation + item + ' '
-            if seed:
-                seed = False
-            else:
-                seed = True
+        new_equation = replace_parts(current_equation,2,true_expressions,false_expressions,contingent_expressions)
+
         return complicate_equation(new_equation,complexity-1,true_expressions,false_expressions,contingent_expressions)
 
-# def replace_parts(true_expressions,false_expressions,contingent_expressions):
-#     pass
+def replace_parts(to_change,changes,true_expressions,false_expressions,contingent_expressions):
+    for x in range(changes):
+        location_of_letters = find('T',to_change) + find('F',to_change) + find('p',to_change)
+        if len(location_of_letters):
+            a = random.choice(location_of_letters)
+            original_length = len(to_change)
+            if to_change[a] == 'T':
+                if random.randint(1,2) == 2:
+                    to_change = to_change[0:a] + '('+random.choice(true_expressions)+')' + to_change[a+1:]
+                else:
+                    to_change = to_change[0:a] + '¬('+random.choice(false_expressions)+')' + to_change[a+1:]
+                difference = len(to_change)-original_length
+                for item in location_of_letters:
+                    if item > a:
+                        item+=difference
+                location_of_letters.pop(location_of_letters.index(a))
+            elif to_change[a] == 'F':
+                if random.randint(1,2) == 2:
+                    to_change = to_change[0:a] + '('+random.choice(false_expressions)+')' + to_change[a+1:]
+                else:
+                    to_change = to_change[0:a] + '¬('+random.choice(true_expressions)+')' + to_change[a+1:]
+                difference = len(to_change)-original_length
+                for item in location_of_letters:
+                    if item > a:
+                        item+=difference
+                location_of_letters.pop(location_of_letters.index(a))
+            elif to_change[a] == 'p':
+                to_change = to_change[0:a] +'('+random.choice(contingent_expressions)+')' + to_change[a+1:]
+                difference = len(to_change)-original_length
+                for item in location_of_letters:
+                    if item > a:
+                        item+=difference
+                location_of_letters.pop(location_of_letters.index(a))
+    return to_change
 
-a = generate_equation(2)
-print(a)
+def find(target,equation):
+    return [i for i, ltr in enumerate(equation) if ltr == target]
+
+a,b = generate_equation(2)
+print(a,len(a),b)
