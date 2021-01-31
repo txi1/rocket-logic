@@ -93,6 +93,7 @@ class Game():
             if self.START and self.game_over == False:
                     self.paused = True
             if self.BACK:
+                self.paused = False
                 self.playing = False
             self.display.fill((0,0,0))
             self.player.draw()
@@ -135,8 +136,9 @@ class Game():
                 self.paused = False
                 self.reset_keys()
             if self.BACK:
-                self.playing = False
                 self.paused = False
+                self.playing = False
+                self.reset_keys()
             self.draw_text('PAUSED', 240, self.windowX/2, self.windowY/2)
             self.screen.blit(self.display, (0,0))
             pygame.display.update()
