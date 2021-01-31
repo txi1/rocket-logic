@@ -6,6 +6,7 @@ import equations
 from menu import MainMenu
 from menu import InstructionsMenu
 from menu import OptionsMenu
+from menu import CreditsMenu
 from time import sleep
 
 class Game():
@@ -28,6 +29,7 @@ class Game():
         self.main_menu = MainMenu(self)
         self.options_menu = OptionsMenu(self)
         self.instr_menu = InstructionsMenu(self)
+        self.credits_menu = CreditsMenu(self)
         self.curr_menu = self.main_menu
         self.get_new_equation()
 

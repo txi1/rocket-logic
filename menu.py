@@ -78,8 +78,10 @@ class MainMenu(Menu):
             elif self.state == 'Options':
                 self.game.curr_menu = self.game.options_menu
             elif self.state == 'Credits':
-                pass
+                self.game.curr_menu = self.game.credits_menu
             self.run_display = False
+        if self.game.BACK:
+            pygame.quit()
 
 class OptionsMenu(Menu):
     def __init__(self, game):
@@ -136,7 +138,6 @@ class InstructionsMenu(Menu):
 
     def display_menu(self):
         self.positiony = self.mid_height - 240
-        self.game.curr_menu = self.game.main_menu
         self.game.display.fill((0, 0, 0))
         for line in self.text:
             self.game.draw_text(line, 75, self.mid_width, self.positiony)
@@ -151,4 +152,21 @@ class InstructionsMenu(Menu):
                 self.run_display = False
             self.blit_screen()
 
+class CreditsMenu(Menu):
+    def __init__(self, game):
+        Menu.__init__(self, game)
 
+    def display_menu(self):
+        self.run_display = True
+        while self.run_display:
+            self.game.display.fill((0, 0, 0))
+            self.game.draw_text("Made By:", 100, self.mid_width, self.mid_height - 60)
+            self.game.draw_text("Taylor Xi", 100, self.mid_width, self.mid_height)
+            self.game.draw_text("William Yin", 100, self.mid_width, self.mid_height + 40)
+            self.game.draw_text("Eric Gershtein", 100, self.mid_width, self.mid_height + 80)
+            self.game.draw_text("Laura Jin", 100, self.mid_width, self.mid_height + 120)
+            self.game.check_events()
+            if self.game.BACK:
+                self.game.curr_menu = self.game.main_menu
+                self.run_display = False
+            self.blit_screen()
