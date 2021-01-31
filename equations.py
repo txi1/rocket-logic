@@ -67,4 +67,4 @@ def find(target,equation):
 
 
 a,b = generate_equation(2)
-8
+
