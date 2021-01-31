@@ -173,7 +173,6 @@ class Game():
         text_surface = font.render(text, True, (255,255,255))
         text_rect = text_surface.get_rect()
         text_rect.center = (x,y)
-        text_rect
         self.display.blit(text_surface, text_rect)
 
     
