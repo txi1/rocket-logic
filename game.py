@@ -95,15 +95,17 @@ class Game():
             self.draw_text(self.wronganswer, 50, 850, self.wronganswery)
             
             if self.checkanswer == False and self.rock.x <= 0:
-                print("in loop")
+                self.checkanswer = True
                 if((self.answery > 400 and self.player.y > 400) or (self.answery < 300 and self.player.y < 300)):
                     print("You win")
-                self.checkanswer == True
+                
+
             self.screen.blit(self.display, (0,0))
 
             pygame.display.update()
             self.reset_keys()
             pygame.time.delay(10)
+
         while self.paused == True:
             self.check_events()
             if self.START:
