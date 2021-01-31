@@ -10,10 +10,8 @@ class Game():
     def __init__(self):
 		
         pygame.init()
-        self.level = 1
-        self.equation, self.answer = equations.generate_equation(self.level)
-        print(self.equation, self.answer)
- 
+        self.level = 0
+        self.checkanswer = False
         self.running = True
         self.playing = False
         self.paused = False
@@ -26,6 +24,7 @@ class Game():
         self.font_name = 'fonts/game_over.ttf'
         pygame.display.set_caption("Rocket Logic: Not quite rocket science")
         self.curr_menu = MainMenu(self)
+        self.get_new_equation()
 
 
     def check_events(self):
@@ -56,6 +55,28 @@ class Game():
     def reset_keys(self):
         self.UP, self.DOWN, self.LEFT, self.RIGHT, self.START, self.BACK = False, False, False, False, False, False
 
+    def get_new_equation(self):
+        self.level += 1
+        self.equation, self.answer = equations.generate_equation(self.level)
+      
+        
+        answers = ['p','T','F']
+        for a in answers:
+            if a == self.answer:
+               answers.remove(a)
+        random_number = random.randint(0,1)
+
+        self.wronganswer = answers[random_number]
+        random_number = random.randint(1,2)
+
+        if random_number == 1:
+            self.answery = 100
+            self.wronganswery = 600
+        else:
+            self.answery = 600
+            self.wronganswery = 100
+    
+
     def game_loop(self):
         while (self.playing and (self.paused == False)):
             #evebt
@@ -69,7 +90,15 @@ class Game():
             self.player.update()
             self.rock.draw()
             self.rock.update()
-            self.draw_text(self.equation, 50, self.windowX/2, 60)		
+            self.draw_text(self.equation, 50, self.windowX/2, 60)
+            self.draw_text(self.answer, 50, 850, self.answery)
+            self.draw_text(self.wronganswer, 50, 850, self.wronganswery)
+            
+            if self.checkanswer == False and self.rock.x <= 0:
+                print("in loop")
+                if((self.answery > 400 and self.player.y > 400) or (self.answery < 300 and self.player.y < 300)):
+                    print("You win")
+                self.checkanswer == True
             self.screen.blit(self.display, (0,0))
 
             pygame.display.update()
@@ -84,6 +113,8 @@ class Game():
                 self.paused = False
             self.draw_text('PAUSED', 240, self.windowX/2, self.windowY/2)
             self.screen.blit(self.display, (0,0))
+            
+
             pygame.display.update()          	
 
     def draw_text(self, text, size, x, y):
@@ -107,7 +138,10 @@ class rocket():
         self.down = False
 
     def draw(self):
-        pygame.draw.rect(self.game.display,(0,0,255),(self.x,self.y,self.w,self.h))
+        #pygame.draw.rect(self.game.display,(0,0,255),(self.x,self.y,self.w,self.h))
+        image = pygame.image.load("images/rocket.png")
+        image = pygame.transform.scale(image, (self.w, self.h))
+        self.game.display.blit(image, (self.x, self.y))
 
 
     def update(self):
@@ -126,7 +160,10 @@ class asteroid():
 		self.w = 1200
 
 	def draw(self):
-		pygame.draw.rect(self.game.display,(0,255,255),(self.x,self.y,self.w,self.h))
+		#pygame.draw.rect(self.game.display,(0,255,255),(self.x,self.y,self.w,self.h))
+                image = pygame.image.load("images/image0.png")
+                image = pygame.transform.scale(image, (self.w, self.h))
+                self.game.display.blit(image, (self.x, self.y))
 
 	def update(self):
 		self.x -= 3
