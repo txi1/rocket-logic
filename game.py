@@ -42,6 +42,7 @@ class Game():
                 self.running, self.playing = False, False
                 self.paused = False
                 self.curr_menu.run_display = False
+                self.game_over = False
             if event.type == pygame.KEYDOWN:
                 if(self.playing == False):
                     if event.key == pygame.K_UP:
