@@ -127,7 +127,6 @@ class Game():
                 if((self.answery > 400 and self.player.y > 400) or (self.answery < 300 and self.player.y < 300)):
                     self.get_new_equation()
                     self.rock.x = 1200
-                    print("You win")
                 else:
                     pygame.time.delay(10)
                     self.reset_keys()
