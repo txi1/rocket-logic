@@ -126,8 +126,6 @@ class Game():
         text_rect.center = (x,y)
         self.display.blit(text_surface, text_rect)
 
-
-
 class rocket():
     
     def __init__(self, game):
@@ -169,6 +167,7 @@ class asteroid():
 
 	def update(self):
 		self.x -= 3
+
 
 start_game = Game()
 
