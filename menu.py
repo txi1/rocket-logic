@@ -158,7 +158,6 @@ class InstructionsMenu(Menu):
         for line in self.text:
             self.game.draw_text_game(line, 25, self.mid_width, self.positiony)
             self.positiony += 40
-            print(line)
         self.blit_screen()
         self.run_display = True
         while self.run_display:
