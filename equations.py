@@ -65,8 +65,8 @@ def replace_parts(to_change,changes,true_expressions,false_expressions,contingen
 def convert(equation):
     equation = equation.replace('∨','V')
     equation = equation.replace('∧','^')
-    equation = equation.replace('→','-<')
-    equation = equation.replace('↔', '>-<')
+    equation = equation.replace('→','->')
+    equation = equation.replace('↔', '<->')
     return equation
 
 def find(target,equation):
