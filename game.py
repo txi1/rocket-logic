@@ -11,7 +11,7 @@ class Game():
 		
         pygame.init()
         self.level = 0
-        self.checkanswer = False
+        self.checkanswer = True
         self.running = True
         self.playing = False
         self.paused = False
@@ -57,8 +57,9 @@ class Game():
 
     def get_new_equation(self):
         self.level += 1
-        self.equation, self.answer = equations.generate_equation(self.level)
-      
+        
+        self.equation, self.answer = equations.generate_equation(int(self.level/10)+1)
+        print(equations.generate_equation(1),equations.generate_equation(2),equations.generate_equation(3))
         
         answers = ['p','T','F']
         for a in answers:
@@ -79,7 +80,7 @@ class Game():
 
     def game_loop(self):
         while (self.playing and (self.paused == False)):
-            #evebt
+            
             self.check_events()
             if self.START:
                     self.paused = True
@@ -93,12 +94,16 @@ class Game():
             self.draw_text(self.equation, 50, self.windowX/2, 60)
             self.draw_text(self.answer, 50, 850, self.answery)
             self.draw_text(self.wronganswer, 50, 850, self.wronganswery)
+            string = f'Score: {self.level-1}'
+            self.draw_text(string,50,50,600)
             
-            if self.checkanswer == False and self.rock.x <= 0:
-                self.checkanswer = True
+            if self.checkanswer == True and self.rock.x <= -1200:
+       
+                self.checkanswer = False
                 if((self.answery > 400 and self.player.y > 400) or (self.answery < 300 and self.player.y < 300)):
-                    print("You win")
-                
+                    self.get_new_equation()
+                    self.rock.x = 1200
+                    self.checkanswer = True
 
             self.screen.blit(self.display, (0,0))
 
@@ -125,6 +130,8 @@ class Game():
         text_rect = text_surface.get_rect()
         text_rect.center = (x,y)
         self.display.blit(text_surface, text_rect)
+
+
 
 class rocket():
     
@@ -166,8 +173,7 @@ class asteroid():
                 self.game.display.blit(image, (self.x, self.y))
 
 	def update(self):
-		self.x -= 3
-
+		self.x -= 10
 
 start_game = Game()
 

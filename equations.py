@@ -2,9 +2,9 @@ import random
 
 def generate_equation(complexity):
 
-    possible_true_bases = ['p ∨ T','p ∨ ¬p', 'p → p', 'T ∨ F', 'p ∨ (p ∨ T)']
-    possible_false_bases = ['p ∧ F', 'p ∧ ¬p', '¬p ↔ p', 'T ∧ F', 'p ∧ (p ∧ F)']
-    possible_contingent_bases = ['p ∧ (p ∨ T)', 'p ∧ (p ∨ F)', 'p ∨ (p ∧ T)', 'p ∨ (p ∧ F)']
+    possible_true_bases = ['p ∨ Tt','p ∨ ¬pt', 'p → pt', 'T ∨ Ft', 'p ∨ (p ∨ T)t']
+    possible_false_bases = ['p ∧ Ff', 'p ∧ ¬pf', '¬p ↔ pf', 'T ∧ Ff', 'p ∧ (p ∧ F)f']
+    possible_contingent_bases = ['p ∧ (p ∨ T)p', 'p ∧ (p ∨ F)p', 'p ∨ (p ∧ T)p', 'p ∨ (p ∧ F)p']
 
     random_number = random.randint(1,3)
     if random_number == 1:
