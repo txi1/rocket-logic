@@ -192,7 +192,7 @@ class asteroid():
         self.game.display.blit(image, (self.x, self.y))
 
     def update(self):
-        self.x -= 10
+        self.x -= 5
 
 def main():
     start_game = Game()
