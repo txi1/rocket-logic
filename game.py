@@ -4,9 +4,6 @@ import pygame
 import sys
 import equations
 from menu import MainMenu
-from menu import InstructionsMenu
-from menu import OptionsMenu
-from menu import CreditsMenu
 from time import sleep
 
 class Game():
@@ -28,11 +25,7 @@ class Game():
         self.font_name = 'fonts/game_over.ttf'
         self.font_game = 'fonts/OpenSans-Light.ttf'
         pygame.display.set_caption("Rocket Logic: Not quite rocket science")
-        self.main_menu = MainMenu(self)
-        self.instr_menu = InstructionsMenu(self)
-        self.options_menu = OptionsMenu(self)       
-        self.credits_menu = CreditsMenu(self)  
-        self.curr_menu = self.main_menu
+        self.curr_menu = MainMenu(self)
         self.get_new_equation()
 
 
@@ -42,7 +35,6 @@ class Game():
                 self.running, self.playing = False, False
                 self.paused = False
                 self.curr_menu.run_display = False
-                self.game_over = False
             if event.type == pygame.KEYDOWN:
                 if(self.playing == False):
                     if event.key == pygame.K_UP:
@@ -50,15 +42,14 @@ class Game():
                     if event.key == pygame.K_DOWN:
                         self.DOWN = True
                 if event.key == pygame.K_RETURN:
+                    self.running = True
                     self.START = True
                 if event.key == pygame.K_BACKSPACE:
                     self.BACK = True
-                    self.rock.x = 1200
-                if(self.game_over == True):
-                    if event.key == pygame.K_LSHIFT:
-                        self.level = 1
-                        self.game_over = False
-                        self.playing = False
+                if event.key == pygame.K_LSHIFT:
+                    self.game_over = False
+                    self.playing = False
+                    main()
 
         if(self.playing):
             keys = pygame.key.get_pressed()
@@ -92,13 +83,12 @@ class Game():
             self.wronganswery = 100
 
     def game_loop(self):
-        while (self.playing and (self.paused == False) and self.game_over == False):
+        while (self.playing and (self.paused == False)):
             
             self.check_events()
-            if self.START and self.game_over == False:
+            if self.START:
                     self.paused = True
             if self.BACK:
-                self.paused = False
                 self.playing = False
             self.display.fill((0,0,0))
             self.player.draw()
@@ -106,27 +96,35 @@ class Game():
             self.rock.draw()
             self.rock.update()
             self.draw_text_game(self.equation, 50, self.windowX/2, 60)
-            self.draw_text_game(self.answer, 50, 1050, self.answery)
-            self.draw_text_game(self.wronganswer, 50, 1050, self.wronganswery)
+            self.draw_text_game(self.answer, 50, 1000, self.answery)
+            self.draw_text_game(self.wronganswer, 50, 1000, self.wronganswery)
             string = f'Score: {self.level-1}'
-            self.draw_text_game(string,35,80,620)
+            self.draw_text_game(string,50,100,620)
             
             if(self.player.x + self.player.w > self.rock.x and self.player.x < self.rock.x + self.rock.w and self.player.y + self.player.h > self.rock.y and self.player.y < self.rock.y + self.rock.h):
                 self.game_over = True
-                self.rock.x = 1200
 
-            if self.rock.x <= -1200:
+            if self.checkanswer == True and self.rock.x <= -1200:
+                self.checkanswer = False
                 if((self.answery > 400 and self.player.y > 400) or (self.answery < 300 and self.player.y < 300)):
                     self.get_new_equation()
                     self.rock.x = 1200
+                    self.checkanswer = True
                     print("You win")
                 else:
                     pygame.time.delay(10)
                     self.reset_keys()
                     self.game_over = True
-                    self.rock.x = 1200
+
+            if self.game_over:
+                self.display.fill((0, 0, 0))
+                self.draw_text("Game Over!", 100, self.windowX/2, self.windowY/2)
+                self.draw_text("Press left shift to play again!", 80, self.windowX/2, self.windowY/2 + 100)
 
             self.screen.blit(self.display, (0,0))
+            if(self.player.x + self.player.w > self.rock.x and self.player.x < self.rock.x + self.rock.w and self.player.y + self.player.h > self.rock. y and self.player.y < self.rock.y + self.rock.h):
+                    #add game over thing here
+                    pass
             pygame.display.update()
             self.reset_keys()
             pygame.time.delay(10)
@@ -135,14 +133,13 @@ class Game():
             self.check_events()
             if self.START:
                 self.paused = False
-                self.reset_keys()
             if self.BACK:
-                self.paused = False
                 self.playing = False
-                self.reset_keys()
+                self.paused = False
             self.draw_text('PAUSED', 240, self.windowX/2, self.windowY/2)
             self.screen.blit(self.display, (0,0))
-            pygame.display.update()
+            
+
 
         while self.game_over:
             self.display.fill((0, 0, 0))
@@ -155,6 +152,7 @@ class Game():
                 self.playing = False
                 self.game_over = False
             self.reset_keys()
+
             pygame.display.update()
 
             
@@ -196,9 +194,9 @@ class rocket():
 
 
     def update(self):
-        if(self.game.UP):
+        if(self.game.UP and self.y > 0):
             self.y -= 5
-        if(self.game.DOWN):
+        if(self.game.DOWN and self.y < 650):
             self.y += 5
               
 class asteroid():
@@ -221,11 +219,9 @@ class asteroid():
 
 def main():
     start_game = Game()
-    while start_game.running:
-        start_game.curr_menu.display_menu()
-        start_game.level = 1
-        while start_game.playing:
-            start_game.game_loop()
+    start_game.curr_menu.display_menu()
+    while start_game.playing:
+        start_game.game_loop()
 
 if __name__ == "__main__":
     main()
