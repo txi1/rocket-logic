@@ -99,9 +99,7 @@ class MainMenu(Menu):
 class OptionsMenu(Menu):
     def __init__(self, game):
         Menu.__init__(self, game)
-        self.state = "Volume"
         self.volx, self.voly = self.mid_width, self.mid_height + 50
-        self.controlsx, self.controlsy = self.mid_width, self.mid_height + 90
         self.cursor_rect.midtop = (self.volx + self.offset, self.voly + 14)
 
     def display_menu(self):
@@ -111,8 +109,10 @@ class OptionsMenu(Menu):
             self.check_input()
             self.game.display.fill((0, 0, 0))
             self.game.draw_text("Options", 100, self.mid_width, self.mid_height - 60)
-            self.game.draw_text("Volume", 80, self.volx, self.voly)
-            self.game.draw_text("Controls", 80, self.controlsx, self.controlsy)
+            if(self.game.allow_pausing):
+                self.game.draw_text("Pausing Allowed", 80, self.volx, self.voly)
+            else:
+                self.game.draw_text("Pausing Disabled", 80, self.volx, self.voly)
             self.draw_cursor()
             self.blit_screen()
 
@@ -120,15 +120,8 @@ class OptionsMenu(Menu):
         if self.game.BACK:
             self.game.curr_menu = self.game.main_menu
             self.run_display = False
-        elif self.game.UP or self.game.DOWN:
-            if self.state == "Volume":
-                self.state = "Controls"
-                self.cursor_rect.midtop = (self.controlsx + self.offset, self.controlsy + 14)
-            else:
-                self.state = "Volume"
-                self.cursor_rect.midtop = (self.volx + self.offset, self.voly + 14)
-        elif self.game.START:
-            pass
+        if self.game.START:
+            self.game.allow_pausing = not self.game.allow_pausing
 
 class InstructionsMenu(Menu):
     def __init__(self, game):
