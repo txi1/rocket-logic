@@ -121,6 +121,8 @@ class Game():
                     self.rock.x = 1200
                     print("You win")
                 else:
+                    pygame.time.delay(10)
+                    self.reset_keys()
                     self.game_over = True
                     self.rock.x = 1200
 
@@ -152,7 +154,7 @@ class Game():
                 self.paused = False
                 self.playing = False
                 self.game_over = False
-                self.reset_keys()
+            self.reset_keys()
             pygame.display.update()
 
             
