@@ -24,6 +24,7 @@ class MainMenu(Menu):
         self.instructionsx, self.instructionsy = self.mid_width, self.mid_height + 90
         self.optionsx, self.optionsy = self.mid_width, self.mid_height + 130
         self.creditsx, self.creditsy = self.mid_width, self.mid_height + 170
+        self.exitx, self.exity = self.mid_width, self.mid_height + 210        
         self.cursor_rect.midtop = (self.startx + self.offset, self.starty + 14)
 
     def display_menu(self):
@@ -40,6 +41,7 @@ class MainMenu(Menu):
             self.game.draw_text("Instructions", 80, self.instructionsx, self.instructionsy)
             self.game.draw_text("Options", 80, self.optionsx, self.optionsy)
             self.game.draw_text("Credits", 80, self.creditsx, self.creditsy)
+            self.game.draw_text("Exit", 80, self.exitx, self.exity)
             self.draw_cursor()
             self.blit_screen()
 
@@ -55,10 +57,16 @@ class MainMenu(Menu):
                 self.cursor_rect.midtop = (self.creditsx + self.offset, self.creditsy + 14)
                 self.state = 'Credits'            
             elif self.state == 'Credits':
+                self.cursor_rect.midtop = (self.exitx + self.offset, self.exity + 14)
+                self.state = 'Exit'
+            elif self.state == 'Exit':
                 self.cursor_rect.midtop = (self.startx + self.offset, self.starty + 14)
-                self.state = 'Start'                
+                self.state = 'Start'                                       
         if self.game.UP:
-            if self.state == 'Credits':
+            if self.state == 'Exit':
+                self.cursor_rect.midtop = (self.creditsx + self.offset, self.creditsy + 14)
+                self.state = 'Credits'                   
+            elif self.state == 'Credits':
                 self.cursor_rect.midtop = (self.optionsx + self.offset, self.optionsy + 14)
                 self.state = 'Options'
             elif self.state == 'Options':
@@ -68,8 +76,8 @@ class MainMenu(Menu):
                 self.cursor_rect.midtop = (self.startx + self.offset, self.starty + 14)
                 self.state = 'Start'
             elif self.state == 'Start':
-                self.cursor_rect.midtop = (self.creditsx + self.offset, self.creditsy + 14)
-                self.state = 'Credits'      
+                self.cursor_rect.midtop = (self.exitx + self.offset, self.exity + 14)
+                self.state = 'Exit'      
 
     def check_input(self):
         self.move_cursor()
@@ -82,6 +90,8 @@ class MainMenu(Menu):
                 self.game.curr_menu = self.game.options_menu
             elif self.state == 'Credits':
                 self.game.curr_menu = self.game.credits_menu
+            elif self.state == 'Exit':
+                pygame.quit()    
             self.run_display = False
         if self.game.BACK:
             pygame.quit()
@@ -139,7 +149,7 @@ class InstructionsMenu(Menu):
                     # "- T ^ F",
                     # "- p ^ (p ^ F) (Absorption Law)"]
                     "Domination Laws: p v T = T, p ^ F = F",
-                    "Negation Laws: p v ¬p = T, p ^ ¬p - F",
+                    "Negation Laws: p v ¬p = T, p ^ ¬p = F",
                     "Implication: p -> q = ¬p v q",
                     "Double Negation: ¬¬p = p",
                     "Associative Laws: p v (p ^ q) = p, p ^ (p v q) = p",
