@@ -100,7 +100,7 @@ class OptionsMenu(Menu):
     def __init__(self, game):
         Menu.__init__(self, game)
         self.volx, self.voly = self.mid_width, self.mid_height + 50
-        self.cursor_rect.midtop = (self.volx + self.offset, self.voly + 14)
+        self.cursor_rect.midtop = (self.volx + self.offset - 50, self.voly + 14)
 
     def display_menu(self):
         self.run_display = True
