@@ -94,7 +94,6 @@ class Game():
             self.draw_text(self.wronganswer, 50, 850, self.wronganswery)
             string = f'Score: {self.level-1}'
             self.draw_text(string,50,1125,620)
-            self.draw_text((repr("p ∨ Tt")),200,400,400)
             
             if self.checkanswer == True and self.rock.x <= -1200:
                 self.checkanswer = False
@@ -173,7 +172,7 @@ class asteroid():
                 self.game.display.blit(image, (self.x, self.y))
 
 	def update(self):
-		self.x -= 10
+		self.x -= 5
 
 start_game = Game()
 
