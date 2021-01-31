@@ -109,6 +109,13 @@ class Game():
             self.rock.draw()
             self.rock.update()
             self.draw_text_game(self.equation, 50, self.windowX/2, 60)
+
+            pygame.draw.rect(self.display, (255,255,255),(1000,50,104,104))
+            pygame.draw.rect(self.display, (0,0,0),(1002,52,100,100))
+
+            pygame.draw.rect(self.display, (255,255,255),(1000,551,104,104))
+            pygame.draw.rect(self.display, (0,0,0),(1002,553,100,100))
+
             self.draw_text_game(self.answer, 50, 1050, self.answery)
             self.draw_text_game(self.wronganswer, 50, 1050, self.wronganswery)
             string = f'Score: {self.level-1}'
