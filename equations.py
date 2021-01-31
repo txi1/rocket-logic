@@ -3,7 +3,7 @@ import random
 def generate_equation(complexity):
 
     possible_true_bases = ['p ∨ T','p ∨ ¬p', 'p → p', 'T ∨ F', 'p ∨ (p ∨ T)','p ↔ p']
-    possible_false_bases = ['p ∧ F', 'p ∧ ¬p', '¬p ↔ p', 'T ∧ F', 'p ∧ (p ∧ F)']
+    possible_false_bases = ['p ∧ F', 'p ∧ ¬p', '¬p ↔ p', 'T ∧ F', 'p ∧ (p ∧ F)','¬(p → T)']
     possible_contingent_bases = ['p ∧ (p ∨ T)', 'p ∧ (p ∨ F)', 'p ∨ (p ∧ T)', 'p ∨ (p ∧ F)','¬p → F']
 
     random_number = random.randint(1,3)
