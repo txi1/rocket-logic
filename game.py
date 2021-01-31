@@ -23,6 +23,7 @@ class Game():
         self.game_over = False
         self.paused = False
         self.UP, self.DOWN, self.LEFT, self.RIGHT, self.START, self.BACK = False, False, False, False, False, False
+        self.allow_pausing = True
         self.player = rocket(self)
         self.rock = asteroid(self)
         self.windowX, self.windowY = 1200, 700
@@ -98,7 +99,7 @@ class Game():
         while (self.playing and (self.paused == False) and self.game_over == False):
             
             self.check_events()
-            if self.START and self.game_over == False:
+            if self.START and self.game_over == False and self.allow_pausing == True:
                     self.paused = True
             if self.BACK:
                 self.paused = False
