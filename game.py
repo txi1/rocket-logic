@@ -4,14 +4,11 @@ import pygame
 import sys
 import equations
 from menu import MainMenu
-from menu import InstructionsMenu
-from menu import OptionsMenu
-from menu import CreditsMenu
 from time import sleep
 
 class Game():
     def __init__(self):
-		
+        
         pygame.init()
         self.level = 0
         self.checkanswer = True
@@ -26,11 +23,7 @@ class Game():
         self.screen = pygame.display.set_mode([self.windowX, self.windowY])
         self.font_name = 'fonts/game_over.ttf'
         pygame.display.set_caption("Rocket Logic: Not quite rocket science")
-        self.main_menu = MainMenu(self)
-        self.options_menu = OptionsMenu(self)
-        self.instr_menu = InstructionsMenu(self)
-        self.credits_menu = CreditsMenu(self)
-        self.curr_menu = self.main_menu
+        self.curr_menu = MainMenu(self)
         self.get_new_equation()
 
 
@@ -101,9 +94,9 @@ class Game():
             self.draw_text(self.wronganswer, 50, 850, self.wronganswery)
             string = f'Score: {self.level-1}'
             self.draw_text(string,50,1125,620)
+            self.draw_text((repr("p ∨ Tt")),200,400,400)
             
             if self.checkanswer == True and self.rock.x <= -1200:
-       
                 self.checkanswer = False
                 if((self.answery > 400 and self.player.y > 400) or (self.answery < 300 and self.player.y < 300)):
                     self.get_new_equation()
