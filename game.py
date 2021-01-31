@@ -55,6 +55,7 @@ class Game():
                     self.rock.x = 1200
                 if(self.game_over == True):
                     if event.key == pygame.K_LSHIFT:
+                        self.level = 1
                         self.game_over = False
                         self.playing = False
 
@@ -113,15 +114,14 @@ class Game():
                 self.game_over = True
                 self.rock.x = 1200
 
-            if self.checkanswer == True and self.rock.x <= -1200:
-                self.checkanswer = False
+            if self.rock.x <= -1200:
                 if((self.answery > 400 and self.player.y > 400) or (self.answery < 300 and self.player.y < 300)):
                     self.get_new_equation()
                     self.rock.x = 1200
-                    self.checkanswer = True
                     print("You win")
                 else:
                     self.game_over = True
+                    self.rock.x = 1200
 
             self.screen.blit(self.display, (0,0))
             pygame.display.update()
@@ -221,6 +221,7 @@ def main():
     start_game = Game()
     while start_game.running:
         start_game.curr_menu.display_menu()
+        start_game.level = 1
         while start_game.playing:
             start_game.game_loop()
 
