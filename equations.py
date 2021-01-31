@@ -9,13 +9,13 @@ def generate_equation(complexity):
     random_number = random.randint(1,3)
     if random_number == 1:
         base = random.choice(possible_true_bases)
-        return complicate_equation(base,complexity,possible_true_bases, possible_false_bases, possible_contingent_bases), 'T'
+        return convert(complicate_equation(base,complexity,possible_true_bases, possible_false_bases, possible_contingent_bases)), 'T'
     elif random_number == 2:
         base = random.choice(possible_false_bases)
-        return complicate_equation(base,complexity,possible_true_bases, possible_false_bases, possible_contingent_bases), 'F'
+        return convert(complicate_equation(base,complexity,possible_true_bases, possible_false_bases, possible_contingent_bases)), 'F'
     else:
         base = random.choice(possible_contingent_bases)
-        return complicate_equation(base,complexity,possible_true_bases, possible_false_bases, possible_contingent_bases), 'p'
+        return convert(complicate_equation(base,complexity,possible_true_bases, possible_false_bases, possible_contingent_bases)), 'p'
     
 
 def complicate_equation(current_equation, complexity, true_expressions, false_expressions, contingent_expressions):
@@ -61,6 +61,13 @@ def replace_parts(to_change,changes,true_expressions,false_expressions,contingen
                     item+=difference
             location_of_letters.pop(location_of_letters.index(a))
     return to_change
+
+def convert(equation):
+    equation = equation.replace('∨','V')
+    equation = equation.replace('∧','^')
+    equation = equation.replace('→','-<')
+    equation = equation.replace('↔', '>-<')
+    return equation
 
 def find(target,equation):
     return [i for i, ltr in enumerate(equation) if ltr == target]
