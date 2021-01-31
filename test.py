@@ -12,6 +12,8 @@ speed = 0.5
 
 
 screen = pygame.display.set_mode([windowX,windowY])
+background = pygame.image.load("images/background.png")
+
 
 def main():
 	running = True
@@ -41,12 +43,16 @@ def main():
 
 
 		if(player.x + player.w > rock.x and player.x < rock.x + rock.w and player.y + player.h > rock. y and player.y < rock.y + rock.h):
+			rock.collided = True
+			player.collided = True
 			print("collision occured!")
 
+		screen.blit(background, (0, 0))
 		player.update()
 		player.draw()
 		rock.update()
 		rock.draw()
+		
 		
 
 		pygame.time.delay(8)
@@ -62,15 +68,23 @@ class rocket():
 		self.w = 50
 		self.moveUp = False
 		self.moveDown = False
+		self.collided = False
 
 	def draw(self):
-		pygame.draw.rect(screen,(0,0,255),(self.x,self.y,self.w,self.h))
+		image = pygame.image.load("images/rocket.png")
+		image = pygame.transform.scale(image, (self.w, self.h))
+		screen.blit(image, (self.x, self.y))
+		#pygame.draw.rect(screen,(0,0,255),(self.x,self.y,self.w,self.h))
 
 	def update(self):
-		if self.moveUp:
+		if (self.collided == True):
+			self.moveUp = False
+			self.moveDown = False
+		elif self.moveUp:
 			self.y -= 5
-		if self.moveDown:
+		elif self.moveDown:
 			self.y += 5
+
 	
 
 class asteroid():
@@ -80,14 +94,21 @@ class asteroid():
 		self.y = 200
 		self.h = 100
 		self.w = 800
+		self.collided = False
 
 	def draw(self):
-		pygame.draw.rect(screen,(0,255,255),(self.x,self.y,self.w,self.h))
+		image = pygame.image.load("images/image0.png")
+		image = pygame.transform.scale(image, (self.w, self.h))
+		screen.blit(image, (self.x, self.y))
+		#pygame.draw.rect(screen,(0,255,255),(self.x,self.y,self.w,self.h))
 
 	def update(self):
-		self.x -= 3
+		if(self.collided == False):
+			self.x -= 3
+		
 		if (self.x == -1000):
 			self.x = 800
+		
 
 
 
