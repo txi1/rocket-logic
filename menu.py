@@ -122,25 +122,37 @@ class InstructionsMenu(Menu):
         Menu.__init__(self, game)
         self.positiony = self.mid_height - 120
         self.text = ["General Rules of Logic",
-                    "True",
-                    "- p v T (Domination Law)",
-                    "- p v (not)p (Law excluded Middle)",
-                    "- p -> p (Implication)",
-                    "- T v F ",
-                    "- p v (p v T) (Domination and Idempotent Law)",
+                    # "True",
+                    # "- p v T (Domination Law)",
+                    # "- p v (not)p (Law excluded Middle)",
+                    # "- p -> p (Implication)",
+                    # "- T v F ",
+                    # "- p v (p v T) (Domination and Idempotent Law)",'',
 
-                    "False",
-                    "- p ^ F (Domination Law)",
-                    "- p ^ not(p) (Contradiction)",
-                    "- not(p) <-> p (Bijection)",
-                    "- T ^ F",
-                    "- p ^ (p ^ F) (Domination and Idempotent Law)]"]
+                    # "False",
+                    # "- p ^ F (Domination Law)",
+                    # "- p ^ not(p) (Contradiction)",
+                    # "- not(p) <-> p (Bijection)",
+                    # "- T ^ F",
+                    # "- p ^ (p ^ F) (Absorption Law)"]
+                    "Domination Laws: p v T = T, p ^ F = F",
+                    "Negation Laws: p v ¬p = T, p ^ ¬p - F",
+                    "Implication: p -> q = ¬p v q",
+                    "Double Negation: ¬¬p = p",
+                    "Associative Laws: p v (p ^ q) = p, p ^ (p v q) = p",
+                    "",
+                    "",
+                    "Game Instructions",
+                    "Move up and down using the",
+                    "arrow keys, avoiding the asteroid",
+                    "andd selecting the logical equivalence"]
+
 
     def display_menu(self):
         self.positiony = self.mid_height - 240
         self.game.display.fill((0, 0, 0))
         for line in self.text:
-            self.game.draw_text(line, 75, self.mid_width, self.positiony)
+            self.game.draw_text_game(line, 25, self.mid_width, self.positiony)
             self.positiony += 40
             print(line)
         self.blit_screen()
