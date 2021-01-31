@@ -145,7 +145,8 @@ class InstructionsMenu(Menu):
                     "Game Instructions",
                     "Move up and down using the",
                     "arrow keys, avoiding the asteroid",
-                    "andd selecting the logical equivalence"]
+                    "and selecting the logical equivalence.",
+                    "Press backspace to back out of this screen."]
 
 
     def display_menu(self):
