@@ -149,7 +149,7 @@ class InstructionsMenu(Menu):
                     # "- T ^ F",
                     # "- p ^ (p ^ F) (Absorption Law)"]
                     "Domination Laws: p v T = T, p ^ F = F",
-                    "Negation Laws: p v ¬p = T, p ^ ¬p - F",
+                    "Negation Laws: p v ¬p = T, p ^ ¬p = F",
                     "Implication: p -> q = ¬p v q",
                     "Double Negation: ¬¬p = p",
                     "Associative Laws: p v (p ^ q) = p, p ^ (p v q) = p",
