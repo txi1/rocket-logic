@@ -1,8 +1,8 @@
-  
 import os
 import random
 import pygame
 import sys
+import equations
 from menu import MainMenu
 from time import sleep
 
@@ -10,6 +10,10 @@ class Game():
     def __init__(self):
 		
         pygame.init()
+        self.level = 1
+        self.equation, self.answer = equations.generate_equation(self.level)
+        print(self.equation, self.answer)
+ 
         self.running = True
         self.playing = False
         self.paused = False
@@ -65,8 +69,9 @@ class Game():
             self.player.update()
             self.rock.draw()
             self.rock.update()
-            #self.draw_text('Thanks for Playing', 120, self.windowX/2, self.windowY/2)		
+            self.draw_text(self.equation, 50, self.windowX/2, 60)		
             self.screen.blit(self.display, (0,0))
+
             pygame.display.update()
             self.reset_keys()
             pygame.time.delay(10)
