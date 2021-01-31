@@ -21,8 +21,9 @@ class MainMenu(Menu):
         Menu.__init__(self, game)
         self.state = "Start"
         self.startx, self.starty = self.mid_width, self.mid_height + 50
-        self.optionsx, self.optionsy = self.mid_width, self.mid_height + 90
-        self.creditsx, self.creditsy = self.mid_width, self.mid_height + 130
+        self.instructionsx, self.instructionsy = self.mid_width, self.mid_height + 90
+        self.optionsx, self.optionsy = self.mid_width, self.mid_height + 130
+        self.creditsx, self.creditsy = self.mid_width, self.mid_height + 170
         self.cursor_rect.midtop = (self.startx + self.offset, self.starty + 14)
 
     def display_menu(self):
@@ -33,6 +34,7 @@ class MainMenu(Menu):
             self.game.display.fill((0, 0, 0))
             self.game.draw_text("Main Menu", 100, self.mid_width, self.mid_height - 60)
             self.game.draw_text("Start Game", 80, self.startx, self.starty)
+            self.game.draw_text("Instructions", 80, self.instructionsx, self.instructionsy)
             self.game.draw_text("Options", 80, self.optionsx, self.optionsy)
             self.game.draw_text("Credits", 80, self.creditsx, self.creditsy)
             self.draw_cursor()
@@ -41,6 +43,9 @@ class MainMenu(Menu):
     def move_cursor(self):
         if self.game.DOWN:
             if self.state == 'Start':
+                self.cursor_rect.midtop = (self.instructionsx + self.offset, self.instructionsy + 14)
+                self.state = 'Instructions'
+            elif self.state == 'Instructions':
                 self.cursor_rect.midtop = (self.optionsx + self.offset, self.optionsy + 14)
                 self.state = 'Options'
             elif self.state == 'Options':
@@ -54,8 +59,11 @@ class MainMenu(Menu):
                 self.cursor_rect.midtop = (self.optionsx + self.offset, self.optionsy + 14)
                 self.state = 'Options'
             elif self.state == 'Options':
+                self.cursor_rect.midtop = (self.instructionsx + self.offset, self.instructionsy + 14)
+                self.state = 'Instructions'
+            elif self.state == 'Instructions':
                 self.cursor_rect.midtop = (self.startx + self.offset, self.starty + 14)
-                self.state = 'Start'
+                self.state == 'Start'
             elif self.state == 'Start':
                 self.cursor_rect.midtop = (self.creditsx + self.offset, self.creditsy + 14)
                 self.state = 'Credits'            
@@ -65,6 +73,8 @@ class MainMenu(Menu):
         if self.game.START:
             if self.state == 'Start':
                 self.game.playing = True
+            elif self.state == 'Instructions':
+                pass
             elif self.state == 'Options':
                 pass
             elif self.state == 'Credits':
