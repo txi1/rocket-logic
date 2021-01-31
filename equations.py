@@ -72,6 +72,3 @@ def convert(equation):
 def find(target,equation):
     return [i for i, ltr in enumerate(equation) if ltr == target]
 
-
-a,b = generate_equation(2)
-8

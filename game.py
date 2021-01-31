@@ -25,7 +25,7 @@ class Game():
         self.windowX, self.windowY = 1200, 700
         self.display = pygame.Surface((self.windowX, self.windowY))
         self.screen = pygame.display.set_mode([self.windowX, self.windowY])
-        self.font_name = 'fonts/game_over.ttf'
+        self.font_name = 'fonts/OpenSans-Light.ttf'
         pygame.display.set_caption("Rocket Logic: Not quite rocket science")
         self.main_menu = MainMenu(self)
         self.instr_menu = InstructionsMenu(self)
