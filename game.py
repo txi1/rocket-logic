@@ -21,7 +21,7 @@ class Game():
         self.windowX, self.windowY = 1200, 700
         self.display = pygame.Surface((self.windowX, self.windowY))
         self.screen = pygame.display.set_mode([self.windowX, self.windowY])
-        self.font_name = 'fonts/game_over.ttf'
+        self.font_name = 'fonts/SourceSerifPro-Light.ttf'
         pygame.display.set_caption("Rocket Logic: Not quite rocket science")
         self.curr_menu = MainMenu(self)
         self.get_new_equation()
@@ -95,15 +95,17 @@ class Game():
             self.draw_text(self.wronganswer, 50, 850, self.wronganswery)
             
             if self.checkanswer == False and self.rock.x <= 0:
-                print("in loop")
+                self.checkanswer = True
                 if((self.answery > 400 and self.player.y > 400) or (self.answery < 300 and self.player.y < 300)):
                     print("You win")
-                self.checkanswer == True
+                
+
             self.screen.blit(self.display, (0,0))
 
             pygame.display.update()
             self.reset_keys()
             pygame.time.delay(10)
+
         while self.paused == True:
             self.check_events()
             if self.START:
@@ -123,8 +125,6 @@ class Game():
         text_rect = text_surface.get_rect()
         text_rect.center = (x,y)
         self.display.blit(text_surface, text_rect)
-
-
 
 class rocket():
     
@@ -167,6 +167,7 @@ class asteroid():
 
 	def update(self):
 		self.x -= 3
+
 
 start_game = Game()
 
