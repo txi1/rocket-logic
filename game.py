@@ -4,6 +4,8 @@ import pygame
 import sys
 import equations
 from menu import MainMenu
+from menu import InstructionsMenu
+from menu import OptionsMenu
 from time import sleep
 
 class Game():
@@ -23,7 +25,10 @@ class Game():
         self.screen = pygame.display.set_mode([self.windowX, self.windowY])
         self.font_name = 'fonts/game_over.ttf'
         pygame.display.set_caption("Rocket Logic: Not quite rocket science")
-        self.curr_menu = MainMenu(self)
+        self.main_menu = MainMenu(self)
+        self.options_menu = OptionsMenu(self)
+        self.instr_menu = InstructionsMenu(self)
+        self.curr_menu = self.main_menu
         self.get_new_equation()
 
 

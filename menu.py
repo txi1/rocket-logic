@@ -74,9 +74,9 @@ class MainMenu(Menu):
             if self.state == 'Start':
                 self.game.playing = True
             elif self.state == 'Instructions':
-                pass
+                self.game.curr_menu = self.game.instr_menu
             elif self.state == 'Options':
-                pass
+                self.game.curr_menu = self.game.options_menu
             elif self.state == 'Credits':
                 pass
             self.run_display = False
@@ -86,15 +86,69 @@ class OptionsMenu(Menu):
         Menu.__init__(self, game)
         self.state = "Volume"
         self.volx, self.voly = self.mid_width, self.mid_height + 50
-        self.controlsx, self.controlsy = self.mid_w, self.mid_h + 90
+        self.controlsx, self.controlsy = self.mid_width, self.mid_height + 90
         self.cursor_rect.midtop = (self.volx + self.offset, self.voly + 14)
 
     def display_menu(self):
         self.run_display = True
         while self.run_display:
+            self.game.check_events()
+            self.check_input()
             self.game.display.fill((0, 0, 0))
             self.game.draw_text("Options", 100, self.mid_width, self.mid_height - 60)
             self.game.draw_text("Volume", 80, self.volx, self.voly)
             self.game.draw_text("Controls", 80, self.controlsx, self.controlsy)
             self.draw_cursor()
             self.blit_screen()
+
+    def check_input(self):
+        if self.game.BACK:
+            self.game.curr_menu = self.game.main_menu
+            self.run_display = False
+        elif self.game.UP or self.game.DOWN:
+            if self.state == "Volume":
+                self.state = "Controls"
+                self.cursor_rect.midtop = (self.controlsx + self.offset, self.controlsy + 14)
+            else:
+                self.state = "Volume"
+                self.cursor_rect.midtop = (self.volx + self.offset, self.voly + 14)
+        elif self.game.START:
+            pass
+
+class InstructionsMenu(Menu):
+    def __init__(self, game):
+        Menu.__init__(self, game)
+        self.positiony = self.mid_height - 120
+        self.text = ["General Rules of Logic",
+                    "True",
+                    "- p v T (Domination Law)",
+                    "- p v (not)p (Law excluded Middle)",
+                    "- p -> p (Implication)",
+                    "- T v F ",
+                    "- p v (p v T) (Domination and Idempotent Law)",
+
+                    "False",
+                    "- p ^ F (Domination Law)",
+                    "- p ^ not(p) (Contradiction)",
+                    "- not(p) <-> p (Bijection)",
+                    "- T ^ F",
+                    "- p ^ (p ^ F) (Domination and Idempotent Law)]"]
+
+    def display_menu(self):
+        self.positiony = self.mid_height - 240
+        self.game.curr_menu = self.game.main_menu
+        self.game.display.fill((0, 0, 0))
+        for line in self.text:
+            self.game.draw_text(line, 75, self.mid_width, self.positiony)
+            self.positiony += 40
+            print(line)
+        self.blit_screen()
+        self.run_display = True
+        while self.run_display:
+            self.game.check_events()
+            if self.game.BACK:
+                self.game.curr_menu = self.game.main_menu
+                self.run_display = False
+            self.blit_screen()
+
+
