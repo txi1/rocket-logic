@@ -112,6 +112,8 @@ class Game():
                     self.checkanswer = True
                     print("You win")
                 else:
+                    pygame.time.delay(10)
+                    self.reset_keys()
                     self.game_over = True
 
             if self.game_over:
@@ -137,6 +139,19 @@ class Game():
             self.draw_text('PAUSED', 240, self.windowX/2, self.windowY/2)
             self.screen.blit(self.display, (0,0))
             
+
+
+        while self.game_over:
+            self.display.fill((0, 0, 0))
+            self.draw_text("Game Over!", 100, self.windowX/2, self.windowY/2)
+            self.draw_text("Press left shift to play again!", 80, self.windowX/2, self.windowY/2 + 100)
+            self.check_events()
+            self.screen.blit(self.display, (0,0))
+            if self.BACK:
+                self.paused = False
+                self.playing = False
+                self.game_over = False
+            self.reset_keys()
 
             pygame.display.update()
 
