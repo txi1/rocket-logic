@@ -4,6 +4,9 @@ import pygame
 import sys
 import equations
 from menu import MainMenu
+from menu import InstructionsMenu
+from menu import OptionsMenu
+from menu import CreditsMenu
 from time import sleep
 
 class Game():
@@ -24,7 +27,11 @@ class Game():
         self.screen = pygame.display.set_mode([self.windowX, self.windowY])
         self.font_name = 'fonts/game_over.ttf'
         pygame.display.set_caption("Rocket Logic: Not quite rocket science")
-        self.curr_menu = MainMenu(self)
+        self.main_menu = MainMenu(self)
+        self.instr_menu = InstructionsMenu(self)
+        self.options_menu = OptionsMenu(self)       
+        self.credits_menu = CreditsMenu(self)  
+        self.curr_menu = self.main_menu
         self.get_new_equation()
 
 
@@ -41,14 +48,13 @@ class Game():
                     if event.key == pygame.K_DOWN:
                         self.DOWN = True
                 if event.key == pygame.K_RETURN:
-                    self.running = True
+    
                     self.START = True
                 if event.key == pygame.K_BACKSPACE:
                     self.BACK = True
                 if event.key == pygame.K_LSHIFT:
                     self.game_over = False
                     self.playing = False
-                    main()
 
         if(self.playing):
             keys = pygame.key.get_pressed()
@@ -119,9 +125,6 @@ class Game():
                 self.draw_text("Press left shift to play again!", 80, self.windowX/2, self.windowY/2 + 100)
 
             self.screen.blit(self.display, (0,0))
-            if(self.player.x + self.player.w > self.rock.x and self.player.x < self.rock.x + self.rock.w and self.player.y + self.player.h > self.rock. y and self.player.y < self.rock.y + self.rock.h):
-                    #add game over thing here
-                    pass
             pygame.display.update()
             self.reset_keys()
             pygame.time.delay(10)
@@ -130,13 +133,12 @@ class Game():
             self.check_events()
             if self.START:
                 self.paused = False
+                self.reset_keys()
             if self.BACK:
                 self.playing = False
                 self.paused = False
             self.draw_text('PAUSED', 240, self.windowX/2, self.windowY/2)
             self.screen.blit(self.display, (0,0))
-            
-
             pygame.display.update()
 
             
@@ -196,9 +198,10 @@ class asteroid():
 
 def main():
     start_game = Game()
-    start_game.curr_menu.display_menu()
-    while start_game.playing:
-        start_game.game_loop()
+    while start_game.running:
+        start_game.curr_menu.display_menu()
+        while start_game.playing:
+            start_game.game_loop()
 
 if __name__ == "__main__":
     main()
