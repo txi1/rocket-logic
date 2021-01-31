@@ -10,10 +10,13 @@ from menu import CreditsMenu
 from time import sleep
 
 class Game():
+
+    
     def __init__(self):
         
         pygame.init()
         self.level = 0
+        
         self.checkanswer = True
         self.running = True
         self.playing = False
@@ -115,6 +118,11 @@ class Game():
                 self.game_over = True
                 self.rock.x = 1200
 
+            if self.rock.x <= 0:
+                self.rock.speed = 10
+            else:
+                self.rock.speed = 5
+
             if self.rock.x <= -1200:
                 if((self.answery > 400 and self.player.y > 400) or (self.answery < 300 and self.player.y < 300)):
                     self.get_new_equation()
@@ -209,6 +217,7 @@ class asteroid():
         self.y = 300
         self.h = 100
         self.w = 1200
+        self.speed = 5
 
     def draw(self):
         #pygame.draw.rect(self.game.display,(0,255,255),(self.x,self.y,self.w,self.h))
@@ -217,7 +226,7 @@ class asteroid():
         self.game.display.blit(image, (self.x, self.y))
 
     def update(self):
-        self.x -= 5
+        self.x -= self.speed
 
 def main():
     start_game = Game()
