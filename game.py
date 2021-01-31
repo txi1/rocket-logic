@@ -25,7 +25,7 @@ class Game():
         self.windowX, self.windowY = 1200, 700
         self.display = pygame.Surface((self.windowX, self.windowY))
         self.screen = pygame.display.set_mode([self.windowX, self.windowY])
-        self.font_name = 'fonts/OpenSans-Light.ttf'
+        self.font_name = 'fonts/game_over.ttf'
         pygame.display.set_caption("Rocket Logic: Not quite rocket science")
         self.main_menu = MainMenu(self)
         self.instr_menu = InstructionsMenu(self)
@@ -48,7 +48,6 @@ class Game():
                     if event.key == pygame.K_DOWN:
                         self.DOWN = True
                 if event.key == pygame.K_RETURN:
-    
                     self.START = True
                 if event.key == pygame.K_BACKSPACE:
                     self.BACK = True
@@ -91,7 +90,7 @@ class Game():
         while (self.playing and (self.paused == False)):
             
             self.check_events()
-            if self.START:
+            if self.START and self.game_over == False:
                     self.paused = True
             if self.BACK:
                 self.playing = False
@@ -108,6 +107,7 @@ class Game():
             
             if(self.player.x + self.player.w > self.rock.x and self.player.x < self.rock.x + self.rock.w and self.player.y + self.player.h > self.rock.y and self.player.y < self.rock.y + self.rock.h):
                 self.game_over = True
+                self.rock.x = 1200
 
             if self.checkanswer == True and self.rock.x <= -1200:
                 self.checkanswer = False
