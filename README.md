@@ -15,5 +15,5 @@ Up/Down key - moves rocket up and down. If the player enters the wrong section o
 ### Credits
 - Eric Gershtein
 - Taylor Xi
-- (unfortunately) William Yin
+- William Yin
 - Laura Jin
