@@ -26,6 +26,7 @@ class Game():
         self.display = pygame.Surface((self.windowX, self.windowY))
         self.screen = pygame.display.set_mode([self.windowX, self.windowY])
         self.font_name = 'fonts/game_over.ttf'
+        self.font_game = 'fonts/OpenSans-Light.ttf'
         pygame.display.set_caption("Rocket Logic: Not quite rocket science")
         self.main_menu = MainMenu(self)
         self.instr_menu = InstructionsMenu(self)
@@ -102,11 +103,11 @@ class Game():
             self.player.update()
             self.rock.draw()
             self.rock.update()
-            self.draw_text(self.equation, 50, self.windowX/2, 60)
-            self.draw_text(self.answer, 50, 850, self.answery)
-            self.draw_text(self.wronganswer, 50, 850, self.wronganswery)
+            self.draw_text_game(self.equation, 50, self.windowX/2, 60)
+            self.draw_text_game(self.answer, 50, 1050, self.answery)
+            self.draw_text_game(self.wronganswer, 50, 1050, self.wronganswery)
             string = f'Score: {self.level-1}'
-            self.draw_text(string,50,1125,620)
+            self.draw_text_game(string,35,80,620)
             
             if(self.player.x + self.player.w > self.rock.x and self.player.x < self.rock.x + self.rock.w and self.player.y + self.player.h > self.rock.y and self.player.y < self.rock.y + self.rock.h):
                 self.game_over = True
@@ -162,6 +163,14 @@ class Game():
         text_surface = font.render(text, True, (255,255,255))
         text_rect = text_surface.get_rect()
         text_rect.center = (x,y)
+        self.display.blit(text_surface, text_rect)
+
+    def draw_text_game(self, text, size, x, y):
+        font = pygame.font.Font(self.font_game, size)
+        text_surface = font.render(text, True, (255,255,255))
+        text_rect = text_surface.get_rect()
+        text_rect.center = (x,y)
+        text_rect
         self.display.blit(text_surface, text_rect)
 
     
