@@ -141,11 +141,11 @@ class InstructionsMenu(Menu):
                     "Double Negation: ¬¬p = p",
                     "Associative Laws: p v (p ^ q) = p, p ^ (p v q) = p",
                     "",
-                    "",
                     "Game Instructions",
                     "Move up and down using the",
                     "arrow keys, avoiding the asteroid",
                     "and selecting the logical equivalence.",
+                    "",
                     "Press backspace to back out of this screen."]
 
 
