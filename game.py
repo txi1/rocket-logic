@@ -64,9 +64,7 @@ class Game():
     def get_new_equation(self):
         self.level += 1
         
-        self.equation, self.answer = equations.generate_equation(int(self.level/10)+1)
-        print(equations.generate_equation(1),equations.generate_equation(2),equations.generate_equation(3))
-        
+        self.equation, self.answer = equations.generate_equation(int(self.level/10)+1)        
         answers = ['p','T','F']
         for a in answers:
             if a == self.answer:
@@ -100,13 +98,12 @@ class Game():
             self.draw_text(self.answer, 50, 850, self.answery)
             self.draw_text(self.wronganswer, 50, 850, self.wronganswery)
             string = f'Score: {self.level-1}'
-            self.draw_text(string,50,50,600)
+            self.draw_text(string,50,1125,620)
             
             if(self.player.x + self.player.w > self.rock.x and self.player.x < self.rock.x + self.rock.w and self.player.y + self.player.h > self.rock.y and self.player.y < self.rock.y + self.rock.h):
                 self.game_over = True
 
             if self.checkanswer == True and self.rock.x <= -1200:
-       
                 self.checkanswer = False
                 if((self.answery > 400 and self.player.y > 400) or (self.answery < 300 and self.player.y < 300)):
                     self.get_new_equation()
@@ -122,7 +119,9 @@ class Game():
                 self.draw_text("Press left shift to play again!", 80, self.windowX/2, self.windowY/2 + 100)
 
             self.screen.blit(self.display, (0,0))
-
+            if(self.player.x + self.player.w > self.rock.x and self.player.x < self.rock.x + self.rock.w and self.player.y + self.player.h > self.rock. y and self.player.y < self.rock.y + self.rock.h):
+                    #add game over thing here
+                    pass
             pygame.display.update()
             self.reset_keys()
             pygame.time.delay(10)
