@@ -64,7 +64,3 @@ def replace_parts(to_change,changes,true_expressions,false_expressions,contingen
 
 def find(target,equation):
     return [i for i, ltr in enumerate(equation) if ltr == target]
-
-
-print(generate_equation(1),generate_equation(2),generate_equation(3))
-
